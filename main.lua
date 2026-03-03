@@ -85,7 +85,7 @@ function parseTags() --- checks current line for syntax
             currentMus = nil
         else
             newMusic = string.gsub(script[currentLine], tag .. " ", "") --- removes tag from line
-            currentMus = music[newMusic]
+            currentMus = audio[newMusic]
             currentMus:setLooping(true)
             currentMus:play()
         end
