@@ -1,7 +1,7 @@
 ------------------------------------------------------
 ------------------------------------------------------
 --- LOVE LETTER ENGINE -------------------------------
-------------------- v. 0.2 ---------------------------
+------------------- v. 0.3 ---------------------------
 ------------------------------------------------------
 
 -- well so this here is a tiny engine for kinetic visual novels.
@@ -77,8 +77,7 @@ function parseTags() --- checks current line for syntax
         --- this is diff syntax from videotome, which is "W! - ". easy to change
         -- hasNametag = false
 
-        if tag == "!MUS" or tag == "!SFX" then
-            --- parse audio
+        if tag == "!MUS" or tag == "!SFX" then --- parse audio
             
             if tag == "!MUS" then
                 checkForStop = string.match(script[currentLine], "stop")
@@ -114,8 +113,8 @@ function parseTags() --- checks current line for syntax
             parseTags()
         end
 
-        if tag == "!BG" or tag == "!SPR" then
-            --- parse image
+        if tag == "!BG" or tag == "!SPR" then --- parse image
+            
 
             checkForHide = string.match(script[currentLine], "hide")
 
@@ -138,8 +137,27 @@ function parseTags() --- checks current line for syntax
                 if isHide == true then
                     currentSprite = nil
                 elseif isHide == false then
+                    --- good spot for positioning logic
+                    checkForX = string.match(script[currentLine], "x%d+")
+                    checkForY = string.match(script[currentLine], "y%d+")
+
+                    if checkForX ~= nil then
+                        newX = string.gsub(checkForX, "x", "") --- gets just the number
+                        newX = string.format(newX, "%d") --- formats as integer
+                        script[currentLine] = string.gsub(script[currentLine], " " .. checkForX, "")
+                        sprX = newX
+                    end
+
+                    if checkForY ~= nil then
+                        newY = string.gsub(checkForY, "y", "") --- gets just the number
+                        newY = string.format(newY, "%d") --- formats as integer
+                        script[currentLine] = string.gsub(script[currentLine], " " .. checkForY, "")
+                        sprY = newY
+                    end
+                    
                     newSprite = string.gsub(script[currentLine], tag .. " ", "")
                     currentSprite = imgs[newSprite]
+                    
                 end
             end
 
@@ -151,8 +169,8 @@ function parseTags() --- checks current line for syntax
             parseTags()
         end
 
-        if chars[tag] ~= nil then
-            --- if tag exists in the chars table. lua uses ~= instead of !=
+        if chars[tag] ~= nil then --- parse nametag
+                --- this checks if tag exists in the chars table. lua uses ~= instead of !=
             -- hasNametag = true --- killed this thought
             script[currentLine] = string.gsub(script[currentLine], tag, chars[tag] .. divider) --- source string, pattern to match, replacement
         end
@@ -243,11 +261,11 @@ end
 
 function love.draw()
     if currentImg ~= nil then
-        love.graphics.draw(currentImg, imgCoords[1], imgCoords[2]) --- image, x, y
+        love.graphics.draw(currentImg, imgX, imgY)
     end
 
     if currentSprite ~= nil then
-        love.graphics.draw(currentSprite, spriteCoords[1], spriteCoords[2])
+        love.graphics.draw(currentSprite, sprX, sprY)
     end
 
     -- if hasNametag == true then

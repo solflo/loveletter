@@ -1,6 +1,9 @@
 function love.conf(t)
-	t.title = "luavn" -- The title of the window the game is in
-	t.version = "11.5"         -- The LÖVE version this game was made for
+	t.modules.physics = false
+
+	t.title = "love letter engine" -- The title of the window the game is in
+	t.window.icon = "icon.png"
+
 	t.window.width = 640       
 	t.window.height = 400
 
@@ -9,24 +12,28 @@ function love.conf(t)
     --- AESTHETICS ZONE ------
     --------------------------
 
-    font = "pc-9800.ttf" --- fonts are kinda heavy so you may want to omit this
-	--- if you do, set it to nil
+	--- TEXT -----------------
+
+    font = "pc-9800.ttf" --- set to nil (no quotes) if you don't include a font file
 	fontSize = 16
-
-	imgSize = {512, 300} --- w, h
-	textWidth = imgSize[1] --- textbox width == image width
-	imgX = (t.window.width - imgSize[1])/2
-
-    imgCoords = {imgX, 20} --- centers the image
-    textCoords = {imgX, imgSize[2] + 40} --- positions the textbox
-	spriteCoords = {264, 180} --- sprites are placed arbitrarily lol
-    
-    divider = " | " --- the style of divider between nametag and text
-
+	divider = " | " --- the style of divider between nametag and text
+	    
     -- nametagColor = {0.84, 0.63, 0.78}
     --- you probably _can_ set a different color per character but that sounds annoyingggg
 	--- i just gave up on this function
-	
+
+	--- VISUALS --------------
+
+	imgSize = {512, 300} --- w, h
+	textWidth = imgSize[1] --- textbox width == image width
+
+	imgX = (t.window.width - imgSize[1])/2 --- default bg position (horizontal) (centered)
+	imgY = 20 --- idem (vertical)
+
+	sprX = 264 --- default sprite position (horizontal)
+	sprY = 180 --- idem (vertical)
+
+    textCoords = {imgX, imgSize[2] + imgY * 2} --- positions the textbox
 
 
 	--------------------------
