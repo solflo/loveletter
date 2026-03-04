@@ -1,8 +1,22 @@
---------------------------
---- PREP -----------------
---------------------------
+------------------------------------------------------
+------------------------------------------------------
+--- LOVE LETTER ENGINE -------------------------------
+------------------- v. 0.2 ---------------------------
+------------------------------------------------------
+
+-- well so this here is a mini visual novel engine
+-- inspired by freya campbell's videotome (https://communistsister.itch.io/videotome),
+-- written in love2d by solflo (https://solflo.neocities.org/)
+
 
 function love.load()
+
+    if font == nil then
+        love.graphics.setNewFont(fontSize)
+    else
+        love.graphics.setNewFont(font, fontSize)
+    end
+    --- font path and size go in conf.lua
 
     --- dealing with images ---
 
@@ -17,6 +31,7 @@ function love.load()
     --- dealing with audio ---
 
     currentMus = nil
+    currentSfx = nil
 
     for i, path in pairs(audio) do
         formatedPath = string.format(path) --- converts path into string
@@ -41,23 +56,6 @@ function love.load()
 
     parseTags()
 
-
-    --------------------------
-    --- AESTHETICS ZONE ------
-    --------------------------
-
-    --- i think this could all go in conf.lua too
-
-    love.graphics.setNewFont(16) --- font size <- well this can't go on conf.lua. i checked.
-    --- need to set a font family too
-
-    imgCoords = {64, 20} --- self explanatory i should hope
-    textCoords = {64,340}
-    textWidth = 512
-
-    divider = " | " --- the style of divider between nametag and text
-
-
 end
 
 
@@ -67,30 +65,44 @@ function parseTags() --- checks current line for syntax
     --- matches bang 1+ alphanumeric char ("!example")
         --- https://www.luadocs.com/docs/functions/string/match#pattern-table
     --- this is diff syntax from videotome, which is "W! - ". easy to change
+    hasNametag = false
 
-    if tag == "!MUS" then
+    if tag == "!MUS" or tag == "!SFX" then
         --- parse audio
-        print("playing music")
+        
+        if tag == "!MUS" then
+            print("playing music")
+            checkForStop = string.match(script[currentLine], "!MUS stop")
 
-        checkForStop = string.match(script[currentLine], "!MUS stop")
+            if checkForStop == nil then
+                isStop = false
+            elseif checkForStop == "!MUS stop" then
+                isStop = true
+            end
 
-        if checkForStop == nil then
-            isStop = false
-        elseif checkForStop == "!MUS stop" then
-            isStop = true
+            if isStop == true and currentMus ~= nil then
+                love.audio.stop(currentMus)
+                currentMus = nil
+            elseif isStop == true and currentMus == nil then
+                return
+            else
+                newMusic = string.gsub(script[currentLine], tag .. " ", "") --- removes tag from line
+                currentMus = audio[newMusic]
+                currentMus:setLooping(true)
+                currentMus:play()
+            end
         end
 
-        if isStop == true then
-            love.audio.stop(currentMus)
-            currentMus = nil
-        else
-            newMusic = string.gsub(script[currentLine], tag .. " ", "") --- removes tag from line
-            currentMus = audio[newMusic]
-            currentMus:setLooping(true)
-            currentMus:play()
+        if tag == "!SFX" then
+            print("playing sound")
+            sfx = string.gsub(script[currentLine], tag .. " ", "") --- removes tag from line
+            currentSfx = audio[sfx]
+            currentSfx:setLooping(false)
+            currentSfx:play()
         end
-            
-        currentLine = currentLine + 1
+
+        table.remove(script, currentLine) --- removes line (for history purposes)
+
         parseTags()
     end
 
@@ -98,14 +110,16 @@ function parseTags() --- checks current line for syntax
         --- parse image
         newImage = string.gsub(script[currentLine], tag .. " ", "") --- removes tag from line
         currentImg = imgs[newImage]
-        currentLine = currentLine + 1
+
+        table.remove(script, currentLine) --- removes line (for history purposes)
+        --- limitation: last image remains on screen always
+
         parseTags()
-        --- limitation: you can't go back in history past the image
-        --- because you'll always get +1 added to currentLine when you get here
     end
 
     if chars[tag] ~= nil then
         --- if tag exists in the chars table. lua uses ~= instead of !=
+        -- hasNametag = true --- killed this thought
         script[currentLine] = string.gsub(script[currentLine], tag, chars[tag] .. divider) --- source string, pattern to match, replacement
     end
 end
@@ -135,6 +149,11 @@ function love.update(dt)
             --- and store the "present" line to know when to change color back to normal
         end
 
+        if key == "f" then
+            fullscreen = not fullscreen
+            love.window.setFullscreen(fullscreen, "exclusive")
+        end
+
         if key == "escape" then
             love.event.quit() --- leave.
         end
@@ -154,5 +173,15 @@ function love.draw()
         --- i could even do bg + sprites. wowza!
         --- also this should probably be dealt with in the history logic. which sounds like a headache...
     end
+
+    -- if hasNametag == true then
+    --     love.graphics.setColor(nametagColor)
+    --     love.graphics.printf(script[currentLine], textCoords[1], textCoords[2], textWidth)
+    --     love.graphics.setColor(1,1,1)
+    -- else
+    --     love.graphics.setColor(1,1,1)
+    --     love.graphics.printf(script[currentLine], textCoords[1], textCoords[2], textWidth) --- string, x, y, width
+    -- end
+
     love.graphics.printf(script[currentLine], textCoords[1], textCoords[2], textWidth) --- string, x, y, width
 end
