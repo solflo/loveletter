@@ -61,121 +61,135 @@ end
 
 
 ---------------------------
---- functions -------------
+--- FUNCTIONS -------------
 ---------------------------
 
 
 function parseTags() --- checks current line for syntax
 
-    tag = string.match(script[currentLine], "!%w+")
-    --- matches bang 1+ alphanumeric char ("!example")
-        --- https://www.luadocs.com/docs/functions/string/match#pattern-table
-    --- this is diff syntax from videotome, which is "W! - ". easy to change
-    hasNametag = false
+    if script[currentLine] ~= nil then
 
-    if tag == "!MUS" or tag == "!SFX" then
-        --- parse audio
-        
-        if tag == "!MUS" then
-            checkForStop = string.match(script[currentLine], "stop")
+        tag = string.match(script[currentLine], "!%w+")
+        --- matches bang 1+ alphanumeric char ("!example")
+            --- https://www.luadocs.com/docs/functions/string/match#pattern-table
+        --- this is diff syntax from videotome, which is "W! - ". easy to change
+        -- hasNametag = false
 
-            if checkForStop == nil then
-                isStop = false
-            elseif checkForStop == "stop" then
-                isStop = true
+        if tag == "!MUS" or tag == "!SFX" then
+            --- parse audio
+            
+            if tag == "!MUS" then
+                checkForStop = string.match(script[currentLine], "stop")
+
+                if checkForStop == nil then
+                    isStop = false
+                elseif checkForStop == "stop" then
+                    isStop = true
+                end
+
+                if isStop == true and currentMus ~= nil then
+                    love.audio.stop(currentMus)
+                    currentMus = nil
+                elseif isStop == true and currentMus == nil then
+                    return
+                else
+                    newMusic = string.gsub(script[currentLine], tag .. " ", "") --- removes tag from line
+                    currentMus = audio[newMusic]
+                    currentMus:setLooping(true)
+                    currentMus:play()
+                end
             end
 
-            if isStop == true and currentMus ~= nil then
-                love.audio.stop(currentMus)
-                currentMus = nil
-            elseif isStop == true and currentMus == nil then
-                return
-            else
-                newMusic = string.gsub(script[currentLine], tag .. " ", "") --- removes tag from line
-                currentMus = audio[newMusic]
-                currentMus:setLooping(true)
-                currentMus:play()
+            if tag == "!SFX" then
+                sfx = string.gsub(script[currentLine], tag .. " ", "") --- removes tag from line
+                currentSfx = audio[sfx]
+                currentSfx:setLooping(false)
+                currentSfx:play()
             end
+
+            table.remove(script, currentLine) --- removes line (for history purposes)
+
+            parseTags()
         end
 
-        if tag == "!SFX" then
-            sfx = string.gsub(script[currentLine], tag .. " ", "") --- removes tag from line
-            currentSfx = audio[sfx]
-            currentSfx:setLooping(false)
-            currentSfx:play()
+        if tag == "!BG" then
+            --- parse image
+            newImage = string.gsub(script[currentLine], tag .. " ", "") --- removes tag from line
+            currentImg = imgs[newImage]
+
+            table.remove(script, currentLine) --- removes line (for history purposes)
+            --- limitation: last image remains on screen always
+
+            parseTags()
         end
 
-        table.remove(script, currentLine) --- removes line (for history purposes)
+        if tag == "!SPR" then
+            --- parse sprite
+            checkForHide = string.match(script[currentLine], "hide")
 
-        parseTags()
-    end
+            if checkForHide == nil then
+                isHide = false
+            elseif checkForHide == "hide" then
+                isHide = true
+            end
 
-    if tag == "!BG" then
-        --- parse image
-        newImage = string.gsub(script[currentLine], tag .. " ", "") --- removes tag from line
-        currentImg = imgs[newImage]
+            if isHide == true then
+                currentSprite = nil
+            elseif isHide == false then
+                newSprite = string.gsub(script[currentLine], tag .. " ", "")
+                currentSprite = imgs[newSprite]
+            end
 
-        table.remove(script, currentLine) --- removes line (for history purposes)
-        --- limitation: last image remains on screen always
+            table.remove(script, currentLine)
 
-        parseTags()
-    end
-
-    if tag == "!SPR" then
-        --- parse sprite
-        checkForHide = string.match(script[currentLine], "hide")
-
-        if checkForHide == nil then
-            isHide = false
-        elseif checkForHide == "hide" then
-            isHide = true
+            parseTags()
         end
 
-        if isHide == true then
-            currentSprite = nil
-        elseif isHide == false then
-            newSprite = string.gsub(script[currentLine], tag .. " ", "")
-            currentSprite = imgs[newSprite]
+        if chars[tag] ~= nil then
+            --- if tag exists in the chars table. lua uses ~= instead of !=
+            -- hasNametag = true --- killed this thought
+            script[currentLine] = string.gsub(script[currentLine], tag, chars[tag] .. divider) --- source string, pattern to match, replacement
         end
-
-        table.remove(script, currentLine)
-
-        parseTags()
-    end
-
-    if chars[tag] ~= nil then
-        --- if tag exists in the chars table. lua uses ~= instead of !=
-        -- hasNametag = true --- killed this thought
-        script[currentLine] = string.gsub(script[currentLine], tag, chars[tag] .. divider) --- source string, pattern to match, replacement
     end
 end
 
 function advanceScript()
     if currentLine < maxLines then
         currentLine = currentLine + 1 --- advances script
+        parseTags() --- so it only parses when the game updates instead of every frame
     end
 
-    if currentLine == maxLines then
+    if currentLine >= maxLines then
         --- end the game
         love.event.quit() --- in a less jarring way though
     end
 end
 
+function returnScript()
+    if currentLine > 1 then
+        currentLine = currentLine - 1
+    end
+    --- aww yeahh rudimentary history babey
+    --- possibility: set a different / fainter color for seen text
+    --- and store the "present" line to know when to change color back to normal
+end
 
 --------------------------
 --- CONTROLS -------------
 --------------------------
 
 function love.update(dt)
+    if script[currentLine] == nil then
+        love.event.quit() --- leave.
+    end
+
     function love.keypressed( key )
         if key == "return" or key == "down" then
             advanceScript()
         end
 
-        if key == "up" and currentLine > 1 then
-            currentLine = currentLine - 1 --- aww yeahh rudimentary history babey
-            --- possibility: set a different / fainter color for seen text
-            --- and store the "present" line to know when to change color back to normal
+        if key == "up" then
+            returnScript()
         end
 
         if key == "f" then
@@ -186,16 +200,24 @@ function love.update(dt)
         if key == "escape" then
             love.event.quit() --- leave.
         end
-
-        parseTags() --- so it only parses when the game updates instead of every frame
     end
 
     function love.mousereleased(x, y, button)
         if button == 1 then
             advanceScript()
         end
-        parseTags()
    end
+
+   function love.wheelmoved(x, y)
+        if y > 0 then
+            -- scroll up
+            returnScript()
+        elseif y < 0 then
+            -- scroll down
+            advanceScript()
+        end
+    end
+
 end
 
 
