@@ -1,8 +1,10 @@
 # love letter engine
 
-well so this here is a mini visual novel engine inspired by freya campbell's [videotome](https://communistsister.itch.io/videotome), written in love2d by [solflo](https://solflo.neocities.org/).
+well so this here is a tiny engine for kinetic visual novels.
 
-it's currently on v0.2 and rather janky. it'll be eternally janky obvi but hopefully a little less so for v1. TODO includes checking if mouse == touch on touchscreens and a main menu and/or end screen.
+inspired by freya campbell's [videotome](https://communistsister.itch.io/videotome), written in love2d by [solflo](https://solflo.neocities.org/).
+
+it's currently on v0.2 and rather janky. it'll be eternally kinda janky obvi but hopefully a little less so for v1. TODO includes checking if mouse == touch on touchscreens and a main menu and/or end screen. and nothing else. minification is the point.
 
 ## using
 

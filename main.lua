@@ -4,7 +4,7 @@
 ------------------- v. 0.2 ---------------------------
 ------------------------------------------------------
 
--- well so this here is a mini visual novel engine
+-- well so this here is a tiny engine for kinetic visual novels.
 -- inspired by freya campbell's videotome (https://communistsister.itch.io/videotome),
 -- written in love2d by solflo (https://solflo.neocities.org/)
 
