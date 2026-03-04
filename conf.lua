@@ -19,6 +19,7 @@ function love.conf(t)
 
     imgCoords = {imgX, 20} --- centers the image
     textCoords = {imgX, imgSize[2] + 40} --- positions the textbox
+	spriteCoords = {264, 180} --- sprites are placed arbitrarily lol
     
     divider = " | " --- the style of divider between nametag and text
 
@@ -41,14 +42,14 @@ function love.conf(t)
 
 	--- syntax: ["!shorthand"] = "in-game tag",
 	--- you don't need to put one per line but you do need the comma separation. and the quotes.
-	--- use whatever convention you prefer, three chars will keep length uniform with other syntax tags,
+	--- use whatever convention you prefer, three chars will keep length uniform with most other syntax tags,
 	--- but a single letter (videotome approach) is faster to type
 	
 	--- IMAGES ---------------
 
 	imgs = {
-        ["background"] = "images/placeholder.png",
-		["bg2"] = "images/placeholder2.png",
+        ["background"] = "images/placeholder-bg.png",
+		["sprite"] = "images/placeholder-sprite.png",
     }
 
 	--- syntax: ["image name"] = "path",

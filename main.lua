@@ -21,6 +21,7 @@ function love.load()
     --- dealing with images ---
 
     currentImg = nil
+    currentSprite = nil
 
     for i, path in pairs(imgs) do
         --- this takes the image table and formats it properly into a drawable
@@ -71,7 +72,6 @@ function parseTags() --- checks current line for syntax
         --- parse audio
         
         if tag == "!MUS" then
-            print("playing music")
             checkForStop = string.match(script[currentLine], "!MUS stop")
 
             if checkForStop == nil then
@@ -94,7 +94,6 @@ function parseTags() --- checks current line for syntax
         end
 
         if tag == "!SFX" then
-            print("playing sound")
             sfx = string.gsub(script[currentLine], tag .. " ", "") --- removes tag from line
             currentSfx = audio[sfx]
             currentSfx:setLooping(false)
@@ -106,13 +105,35 @@ function parseTags() --- checks current line for syntax
         parseTags()
     end
 
-    if tag == "!IMG" then
+    if tag == "!BG" then
         --- parse image
         newImage = string.gsub(script[currentLine], tag .. " ", "") --- removes tag from line
         currentImg = imgs[newImage]
 
         table.remove(script, currentLine) --- removes line (for history purposes)
         --- limitation: last image remains on screen always
+
+        parseTags()
+    end
+
+    if tag == "!SPR" then
+        --- parse sprite
+        checkForHide = string.match(script[currentLine], "!STR hide")
+
+        if checkForHide == nil then
+            isHide = false
+        elseif checkForHide == "!STR hide" then
+            isHide = true
+        end
+
+        if isHide == true then
+            currentSprite = nil
+        elseif isHide == false then
+            newSprite = string.gsub(script[currentLine], tag .. " ", "")
+            currentSprite = imgs[newSprite]
+        end
+        
+        table.remove(script, currentLine)
 
         parseTags()
     end
@@ -170,8 +191,10 @@ end
 function love.draw()
     if currentImg ~= nil then
         love.graphics.draw(currentImg, imgCoords[1], imgCoords[2]) --- image, x, y
-        --- i could even do bg + sprites. wowza!
-        --- also this should probably be dealt with in the history logic. which sounds like a headache...
+    end
+
+    if currentSprite ~= nil then
+        love.graphics.draw(currentSprite, spriteCoords[1], spriteCoords[2])
     end
 
     -- if hasNametag == true then
