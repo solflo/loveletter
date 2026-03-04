@@ -11,6 +11,8 @@
 
 function love.load()
 
+    gamestate = "menu"
+
     if font == nil then
         love.graphics.setNewFont(fontSize)
     else
@@ -178,19 +180,23 @@ function parseTags() --- checks current line for syntax
 end
 
 function advanceScript()
-    if currentLine < maxLines then
+    if gamestate == "menu" then
+        currentLine = 1
+        gamestate = "game"
+    end
+
+    if currentLine < maxLines and gamestate == "game" then
         currentLine = currentLine + 1 --- advances script
         parseTags() --- so it only parses when the game updates instead of every frame
     end
 
     if currentLine >= maxLines then
-        --- end the game
-        love.event.quit() --- in a less jarring way though
+        gamestate = "end" --- end the game
     end
 end
 
 function returnScript()
-    if currentLine > 1 then
+    if currentLine > 1 and gamestate == "game" then
         currentLine = currentLine - 1
     end
     --- aww yeahh rudimentary history babey
@@ -203,8 +209,9 @@ end
 --------------------------
 
 function love.update(dt)
-    if script[currentLine] == nil then
-        love.event.quit() --- leave.
+    if script[currentLine] == nil and gamestate == "game" then
+        gamestate = "end"
+        return
     end
 
     function love.keypressed( key )
@@ -231,7 +238,13 @@ function love.update(dt)
         end
 
         if key == "escape" then
-            love.event.quit() --- leave.
+            if gamestate ~= "game" then
+                love.event.quit()
+            end
+
+            if gamestate == "game" then
+                gamestate = "menu"
+            end
         end
     end
 
@@ -260,6 +273,21 @@ end
 
 
 function love.draw()
+
+    if gamestate == "menu" then
+        
+        love.graphics.printf(title, textCoords[1], 50, textWidth, "left")
+        love.graphics.printf(menuText, textCoords[1], 180, textWidth, "left")
+
+        return
+    end
+
+    if gamestate == "end" then
+        love.graphics.printf(endText, textCoords[1], 80, textWidth, "center")
+        return
+    end
+
+
     if currentImg ~= nil then
         love.graphics.draw(currentImg, imgX, imgY)
     end

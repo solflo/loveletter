@@ -2,6 +2,25 @@ function love.conf(t)
 	t.modules.physics = false
 
 	t.title = "love letter engine" -- The title of the window the game is in
+	title = t.title --- game name for the menu (can be different, don't forget quotes)
+
+	menuText = [[
+[enter] / [down] / [left-click] advance
+[up] / [scrollwheel up] return
+[esc] exit
+[f] fullscreen
+[m] mute ]]
+
+	--- text for main menu / title screen. it's shown literally so tab indents are a no-no :(
+
+	endText = [[
+<EOF>
+
+
+[esc] exit]]
+
+	--- text for the end screen.
+
 	t.window.icon = "icon.png"
 
 	t.window.width = 640       
