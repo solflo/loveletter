@@ -31,6 +31,8 @@ function love.load()
 
     --- dealing with audio ---
 
+    volume = 1.0
+
     currentMus = nil
     currentSfx = nil
 
@@ -195,6 +197,15 @@ function love.update(dt)
         if key == "f" then
             fullscreen = not fullscreen
             love.window.setFullscreen(fullscreen, "exclusive")
+        end
+
+        if key == "m" then
+            if volume == 1.0 then
+                volume = 0.0
+            elseif volume == 0.0 then
+                volume = 1.0
+            end
+            love.audio.setVolume(volume)
         end
 
         if key == "escape" then

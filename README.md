@@ -22,4 +22,5 @@ it's currently on v0.2 and rather janky. it'll be eternally janky obvi but hopef
 - ```enter```, ```down arrow```, ```left click``` and ```scroll down``` advances text
 - ```up arrow``` and ```scroll up``` display previous text. this won't affect images or audio
 - ```f``` toggles fullscreen
+- ```m``` toggles mute
 - ```esc``` closes the game
