@@ -72,11 +72,11 @@ function parseTags() --- checks current line for syntax
         --- parse audio
         
         if tag == "!MUS" then
-            checkForStop = string.match(script[currentLine], "!MUS stop")
+            checkForStop = string.match(script[currentLine], "stop")
 
             if checkForStop == nil then
                 isStop = false
-            elseif checkForStop == "!MUS stop" then
+            elseif checkForStop == "stop" then
                 isStop = true
             end
 
@@ -118,11 +118,11 @@ function parseTags() --- checks current line for syntax
 
     if tag == "!SPR" then
         --- parse sprite
-        checkForHide = string.match(script[currentLine], "!STR hide")
+        checkForHide = string.match(script[currentLine], "hide")
 
         if checkForHide == nil then
             isHide = false
-        elseif checkForHide == "!STR hide" then
+        elseif checkForHide == "hide" then
             isHide = true
         end
 
@@ -132,7 +132,7 @@ function parseTags() --- checks current line for syntax
             newSprite = string.gsub(script[currentLine], tag .. " ", "")
             currentSprite = imgs[newSprite]
         end
-        
+
         table.remove(script, currentLine)
 
         parseTags()
