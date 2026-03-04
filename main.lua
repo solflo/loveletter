@@ -114,19 +114,9 @@ function parseTags() --- checks current line for syntax
             parseTags()
         end
 
-        if tag == "!BG" then
+        if tag == "!BG" or tag == "!SPR" then
             --- parse image
-            newImage = string.gsub(script[currentLine], tag .. " ", "") --- removes tag from line
-            currentImg = imgs[newImage]
 
-            table.remove(script, currentLine) --- removes line (for history purposes)
-            --- limitation: last image remains on screen always
-
-            parseTags()
-        end
-
-        if tag == "!SPR" then
-            --- parse sprite
             checkForHide = string.match(script[currentLine], "hide")
 
             if checkForHide == nil then
@@ -135,14 +125,28 @@ function parseTags() --- checks current line for syntax
                 isHide = true
             end
 
-            if isHide == true then
-                currentSprite = nil
-            elseif isHide == false then
-                newSprite = string.gsub(script[currentLine], tag .. " ", "")
-                currentSprite = imgs[newSprite]
+            if tag == "!BG" then
+                if isHide == true then
+                    currentImg = nil
+                elseif isHide == false then
+                    newImg = string.gsub(script[currentLine], tag .. " ", "") --- removes tag from line
+                    currentImg = imgs[newImg]
+                end
             end
 
-            table.remove(script, currentLine)
+            if tag == "!SPR" then
+                if isHide == true then
+                    currentSprite = nil
+                elseif isHide == false then
+                    newSprite = string.gsub(script[currentLine], tag .. " ", "")
+                    currentSprite = imgs[newSprite]
+                end
+            end
+
+            --- i love copypasting instead of figuring out functions yum
+
+            table.remove(script, currentLine) --- removes line (for history purposes)
+            --- limitation: last image remains on screen always
 
             parseTags()
         end

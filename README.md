@@ -14,14 +14,14 @@ it's currently on v0.2 and rather janky. it'll be eternally kinda janky obvi but
 ### syntax
 
 - all commands are preceded by ```!```. you can use one command per line.
-- ```!BG name``` and ```!SPR name``` display images. ```!SPR``` (sprite) goes on top, and can be hidden with ```!SPR hide```
+- ```!BG name``` and ```!SPR name``` display images. ```!SPR``` (sprite) goes on top. both can be hidden with ```!BG hide``` / ```!SPR hide```
 - ```!MUS name``` plays looping audio. can be stopped with ```!MUS stop```
 - ```!SFX name``` plays audio once and can't be stopped
-- ```!NAME``` prefixes the line with a nametag
+- ```!name``` prefixes the line with a nametag
 
 ## playing
 
-- ```enter```, ```down arrow```, ```left click``` and ```scroll down``` advances text
+- ```enter```, ```down arrow```, ```left click``` and ```scroll down``` advance text
 - ```up arrow``` and ```scroll up``` display previous text. this won't affect images or audio
 - ```f``` toggles fullscreen
 - ```m``` toggles mute

@@ -9,6 +9,7 @@ it had stood so for eighty years and might stand for eighty more.
 Within, walls continued upright, bricks met neatly, floors were firm, and doors were sensibly shut;
 !SPR hide
 silence lay steadily against the wood and stone of Hill House, and whatever walked there, walked alone.
+!BG hide
 !MUS stop
 ---
 it's nearly universally claimed omegas are simply wired to crave penetration,
