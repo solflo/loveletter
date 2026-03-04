@@ -10,7 +10,6 @@ function love.conf(t)
 [esc] exit
 [f] fullscreen
 [m] mute ]]
-
 	--- text for main menu / title screen. it's shown literally so tab indents are a no-no :(
 
 	endText = [[
@@ -18,10 +17,9 @@ function love.conf(t)
 
 
 [esc] exit]]
-
 	--- text for the end screen.
 
-	t.window.icon = "icon.png"
+	t.window.icon = "icon.png" --- i'll be honest kitten this seems useless
 
 	t.window.width = 640       
 	t.window.height = 400
@@ -76,6 +74,7 @@ function love.conf(t)
 	imgs = {
         ["background"] = "images/placeholder-bg.png",
 		["sprite"] = "images/placeholder-sprite.png",
+		["puppy"] = "images/placeholder-puppy.png",
     }
 
 	--- syntax: ["image name"] = "path",

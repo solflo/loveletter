@@ -1,7 +1,7 @@
 ------------------------------------------------------
 ------------------------------------------------------
 --- LOVE LETTER ENGINE -------------------------------
-------------------- v. 0.3 ---------------------------
+------------------- v. 1.0 ---------------------------
 ------------------------------------------------------
 
 -- well so this here is a tiny engine for kinetic visual novels.
@@ -183,6 +183,7 @@ function advanceScript()
     if gamestate == "menu" then
         currentLine = 1
         gamestate = "game"
+        return
     end
 
     if currentLine < maxLines and gamestate == "game" then

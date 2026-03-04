@@ -4,9 +4,9 @@ well so this here is a tiny engine for kinetic visual novels.
 
 inspired by freya campbell's [videotome](https://communistsister.itch.io/videotome), written in love2d by [solflo](https://solflo.neocities.org/).
 
-it's currently on v0.x and rather janky. it'll be eternally kinda janky obvi but hopefully a little less so for v1.
+it's currently on v1.0 and rather janky. it'll be eternally kinda janky obvi but i might tweak things here and there as i use the thing and need features for myself (i'd love pixel-perfect scaling... and i am not using a library for that. minor sprite animation could be cute too[^1]). but **minification is the point** and i've already scope creeped with sprite positioning so don't hold your breath.
 
-TODO includes checking if mouse == touch on touchscreens. and nothing else. minification is the point. i've already scope creeped with sprite positioning.
+[^1]: see that's the problem with adding features: they start asking for other features. this or multiple sprite slots wouldn't have crossed my mind if i'd stuck with a single image slot, for the background!
 
 ## using
 
@@ -23,6 +23,10 @@ TODO includes checking if mouse == touch on touchscreens. and nothing else. mini
 - ```!MUS name``` plays looping audio. can be stopped with ```!MUS stop```
 - ```!SFX name``` plays audio once and can't be stopped
 - ```!name``` prefixes the line with a nametag
+
+### building
+
+uh you're on your own there but i [makelove](https://github.com/pfirsich/makelove) is very straightforward, at least on linux. love.js is hiiiideous out of the box but you can't win them all. i'm not making a better index.html template.
 
 ## playing
 
