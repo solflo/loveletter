@@ -60,6 +60,11 @@ function love.load()
 end
 
 
+---------------------------
+--- functions -------------
+---------------------------
+
+
 function parseTags() --- checks current line for syntax
 
     tag = string.match(script[currentLine], "!%w+")
@@ -145,23 +150,26 @@ function parseTags() --- checks current line for syntax
     end
 end
 
+function advanceScript()
+    if currentLine < maxLines then
+        currentLine = currentLine + 1 --- advances script
+    end
+
+    if currentLine == maxLines then
+        --- end the game
+        love.event.quit() --- in a less jarring way though
+    end
+end
+
 
 --------------------------
---- BTS ------------------
+--- CONTROLS -------------
 --------------------------
 
 function love.update(dt)
     function love.keypressed( key )
         if key == "return" or key == "down" then
-            if currentLine < maxLines then
-                currentLine = currentLine + 1 --- advances script
-            end
-
-            if currentLine == maxLines then
-                --- end the game
-                love.event.quit() --- in a less jarring way though
-            end
-
+            advanceScript()
         end
 
         if key == "up" and currentLine > 1 then
@@ -178,8 +186,16 @@ function love.update(dt)
         if key == "escape" then
             love.event.quit() --- leave.
         end
-    parseTags() --- so it only parses when the game updates instead of every frame
+
+        parseTags() --- so it only parses when the game updates instead of every frame
     end
+
+    function love.mousereleased(x, y, button)
+        if button == 1 then
+            advanceScript()
+        end
+        parseTags()
+   end
 end
 
 
