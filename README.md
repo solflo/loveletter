@@ -1,10 +1,10 @@
 # love letter engine
 
-well so this here is a tiny engine for kinetic visual novels.
+well so this here is a tiny engine for kinetic visual novels. the focus is in easy and fast writing without the temptation to scope creep and complicate things with features, as well as keeping file sizes small and cute. the demo game appimage, for example, is just under 5mb, and i'm pretty sure most of that is the bundled font.
 
 inspired by freya campbell's [videotome](https://communistsister.itch.io/videotome), written in love2d by [solflo](https://solflo.neocities.org/).
 
-it's currently on v1.0 and rather janky. it'll be eternally kinda janky obvi but i might tweak things here and there as i use the thing and need features for myself (i'd love pixel-perfect scaling... and i am not using a library for that. minor sprite animation could be cute too[^1]). but **minification is the point** and i've already scope creeped with sprite positioning so don't hold your breath.
+it's currently on v1.0 and rather janky. it was written in under 48 hours by someone who's never touched lua before. it'll be eternally kinda janky obvi but i might tweak things here and there as i use the thing and need features for myself (i'd love pixel-perfect scaling... and i am not using a library for that. minor sprite animation could be cute too[^1]). but _minification is the point_ and i've already scope crept with sprite positioning so don't hold your breath.
 
 [^1]: see that's the problem with adding features: they start asking for other features. this or multiple sprite slots wouldn't have crossed my mind if i'd stuck with a single image slot, for the background!
 
@@ -26,7 +26,7 @@ it's currently on v1.0 and rather janky. it'll be eternally kinda janky obvi but
 
 ### building
 
-uh you're on your own there but i [makelove](https://github.com/pfirsich/makelove) is very straightforward, at least on linux. love.js is hiiiideous out of the box but you can't win them all. i'm not making a better index.html template.
+uh you're on your own there but [makelove](https://github.com/pfirsich/makelove) is very straightforward, at least on linux (and probably wsl too). love.js is hiiiideous out of the box but you can't win them all. i'm not making a template, but it's pretty easy to adjust things so it looks decent as an itch embed.
 
 ## playing
 

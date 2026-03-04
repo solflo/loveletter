@@ -1,6 +1,7 @@
-name = "love letter engine"
-default_targets = ["win32", "win64", "appimage", "lovejs", "macos"]
+name = "love letter engine demo"
+default_targets = ["appimage", "lovejs"]
 build_directory = "makelove-build"
+icon_file = "icon.png"
 
 love_files = [
     "::git-ls-tree::",

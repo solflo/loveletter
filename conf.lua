@@ -19,7 +19,8 @@ function love.conf(t)
 [esc] exit]]
 	--- text for the end screen.
 
-	t.window.icon = "icon.png" --- i'll be honest kitten this seems useless
+	t.window.icon = "icon.png"
+		--- if using makelove you also need to specify the icon on the .toml file over there
 
 	t.window.width = 640       
 	t.window.height = 400
