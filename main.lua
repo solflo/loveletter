@@ -1,7 +1,7 @@
 ------------------------------------------------------
 ------------------------------------------------------
 --- LOVE LETTER ENGINE -------------------------------
-------------------- v. 1.0 ---------------------------
+------------------- v. 1.0.1 -------------------------
 ------------------------------------------------------
 
 -- well so this here is a tiny engine for kinetic visual novels.
@@ -22,9 +22,6 @@ function love.load()
 
     --- dealing with images ---
 
-    currentImg = nil
-    currentSprite = nil
-
     for i, path in pairs(imgs) do
         --- this takes the image table and formats it properly into a drawable
         formatedPath = string.format(path) --- converts path into string
@@ -35,9 +32,6 @@ function love.load()
 
     volume = 1.0
 
-    currentMus = nil
-    currentSfx = nil
-
     for i, path in pairs(audio) do
         formatedPath = string.format(path) --- converts path into string
         audio[i] = love.audio.newSource(formatedPath, "stream")
@@ -46,6 +40,26 @@ function love.load()
 
     --- ^^ these could be a single reused function but thog don't caare. it'd come down to the same number of lines
 
+    reset()
+
+end
+
+
+---------------------------
+--- FUNCTIONS -------------
+---------------------------
+
+function reset() --- puts the game into a freshly opened state
+
+    --- images ---
+
+    currentImg = nil
+    currentSprite = nil
+
+    --- audio ---
+
+    currentMus = nil
+    currentSfx = nil
 
     --- dealing with the script ---
 
@@ -61,13 +75,8 @@ function love.load()
 
     parseTags()
 
+
 end
-
-
----------------------------
---- FUNCTIONS -------------
----------------------------
-
 
 function parseTags() --- checks current line for syntax
 
@@ -245,6 +254,7 @@ function love.update(dt)
 
             if gamestate == "game" then
                 gamestate = "menu"
+                reset()
             end
         end
     end

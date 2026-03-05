@@ -15,7 +15,7 @@ it's currently on v1.0 and rather janky. it was written in under 48 hours by som
 - configuration is in ```conf.lua```
 - engine is ```main.lua```. any fancier changes go there
 
-oh and you'd better install [löve](https://www.love2d.org/) for testing, duh. i use it by opening the terminal on the directory and running ```love .```.
+oh and you'd better install [löve](https://www.love2d.org/) for testing, duh. i use it by opening the terminal in the directory and running ```love .```.
 
 ### syntax
 
