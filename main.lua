@@ -1,7 +1,7 @@
 ------------------------------------------------------
 ------------------------------------------------------
 --- LOVE LETTER ENGINE -------------------------------
-------------------- v. 1.0.1 -------------------------
+------------------- v. 1.1 ---------------------------
 ------------------------------------------------------
 
 -- well so this here is a tiny engine for kinetic visual novels.
@@ -55,6 +55,13 @@ function reset() --- puts the game into a freshly opened state
 
     currentImg = nil
     currentSprite = nil
+    oldSprite = nil
+    newSprite = nil
+
+    sprX = defaultSprX
+    sprY = defaultSprY
+    newX = nil
+    newY = nil
 
     --- audio ---
 
@@ -148,7 +155,10 @@ function parseTags() --- checks current line for syntax
                 if isHide == true then
                     currentSprite = nil
                 elseif isHide == false then
-                    --- good spot for positioning logic
+                    if currentSprite ~= nil then
+                        oldSprite = string.format(newSprite)
+                    end
+
                     checkForX = string.match(script[currentLine], "x%d+")
                     checkForY = string.match(script[currentLine], "y%d+")
 
@@ -156,17 +166,18 @@ function parseTags() --- checks current line for syntax
                         newX = string.gsub(checkForX, "x", "") --- gets just the number
                         newX = string.format(newX, "%d") --- formats as integer
                         script[currentLine] = string.gsub(script[currentLine], " " .. checkForX, "")
-                        sprX = newX
+                        -- sprX = newX
                     end
 
                     if checkForY ~= nil then
                         newY = string.gsub(checkForY, "y", "") --- gets just the number
                         newY = string.format(newY, "%d") --- formats as integer
                         script[currentLine] = string.gsub(script[currentLine], " " .. checkForY, "")
-                        sprY = newY
+                        -- sprY = newY
                     end
-                    
+
                     newSprite = string.gsub(script[currentLine], tag .. " ", "")
+
                     currentSprite = imgs[newSprite]
                     
                 end
@@ -184,6 +195,41 @@ function parseTags() --- checks current line for syntax
                 --- this checks if tag exists in the chars table. lua uses ~= instead of !=
             -- hasNametag = true --- killed this thought
             script[currentLine] = string.gsub(script[currentLine], tag, chars[tag] .. divider) --- source string, pattern to match, replacement
+        end
+    end
+end
+
+
+
+function moveSprite()
+    --- this function is horrendous and i'm sorry
+    --- this thing gave me much more trouble than i anticipated
+
+    if newX ~= nil and sprX ~= nil then --- if both have x coordinates
+        if oldSprite == newSprite then --- if using the same sprite
+            newX = string.format(newX, "%d") --- these should have already been numbers idk why i got errors
+            sprX = string.format(sprX, "%d")
+            if newX < sprX then
+                sprX = sprX - (sprX - newX) / animationSpeed
+            elseif newX > sprX then
+                sprX = sprX + (sprX + newX) / animationSpeed
+            end
+        else
+            sprX = newX
+        end
+    end
+
+    if newY ~= nil and sprY ~= nil then --- if both have y coordinates
+        if oldSprite == newSprite then
+            newY = string.format(newY, "%d")
+            sprY = string.format(sprY, "%d")
+            if newY < sprY then
+                sprY = sprY - (sprY - newY) / animationSpeed
+            elseif newY > sprY then
+                sprY = sprY + (sprY + newY) / animationSpeed
+            end
+        else
+            sprY = newY
         end
     end
 end
@@ -223,6 +269,8 @@ function love.update(dt)
         gamestate = "end"
         return
     end
+
+    moveSprite()
 
     function love.keypressed( key )
         if key == "return" or key == "down" then
@@ -274,7 +322,6 @@ function love.update(dt)
             advanceScript()
         end
     end
-
 end
 
 

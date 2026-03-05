@@ -4,7 +4,7 @@ well so this here is a tiny engine for kinetic visual novels. the focus is in ea
 
 inspired by freya campbell's [videotome](https://communistsister.itch.io/videotome), written in love2d by [solflo](https://solflo.neocities.org/).
 
-it's currently on v1.0 and rather janky. it was written in under 48 hours by someone who's never touched lua before. it'll be eternally kinda janky obvi but i might tweak things here and there as i use the thing and need features for myself (i'd love pixel-perfect scaling... and i am not using a library for that. minor sprite animation could be cute too[^1]). but _minification is the point_ and i've already scope crept with sprite positioning so don't hold your breath.
+it's currently on v1.1 and rather janky. it was written in under 48 hours by someone who's never touched lua before. it'll be eternally kinda janky obvi but i might tweak things here and there as i use the thing and need features for myself (i already added sprite movement which i don't even really use [^1] and i'd love pixel-perfect scaling... and i am not using a library for that.). but _minification is the point_ and i've already scope crept with sprite positioning so don't hold your breath.
 
 [^1]: see that's the problem with adding features: they start asking for other features. this or multiple sprite slots wouldn't have crossed my mind if i'd stuck with a single image slot, for the background!
 
@@ -22,6 +22,7 @@ oh and you'd better install [löve](https://www.love2d.org/) for testing, duh. i
 - all commands are preceded by ```!```, one command per line
 - ```!BG name``` displays an image at a fixed position. can be hidden with ```!BG hide```
 - ```!SPR name``` (sprite) goes on top. can be positioned with ```!SPR name x100 y100``` (either coordinate can be ommited). can be hidden with ```!SPR hide```
+- if changing positions of a sprite already on screen, it'll linearly move between positions by default. this is a little janky. going ```!SPR hide``` before the new ```!SPR name``` will change positions instantly. i have not tested this extensively 
 - ```!MUS name``` plays looping audio. can be stopped with ```!MUS stop```
 - ```!SFX name``` plays audio once and can't be stopped
 - ```!name``` prefixes the line with a nametag

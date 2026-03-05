@@ -48,8 +48,9 @@ function love.conf(t)
 	imgX = (t.window.width - imgSize[1])/2 --- default bg position (horizontal) (centered)
 	imgY = 20 --- idem (vertical)
 
-	sprX = 264 --- default sprite position (horizontal)
-	sprY = 180 --- idem (vertical)
+	defaultSprX = 264 --- default sprite position (horizontal)
+	defaultSprY = 180 --- idem (vertical)
+	animationSpeed = 4 --- lower values = faster movement, with 1 being instant
 
     textCoords = {imgX, imgSize[2] + imgY * 2} --- positions the textbox
 
