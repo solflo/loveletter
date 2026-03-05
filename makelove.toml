@@ -1,9 +1,0 @@
-name = "love letter engine demo"
-default_targets = ["lovejs"]
-build_directory = "makelove-build"
-icon_file = "icon.png"
-
-love_files = [
-    "::git-ls-tree::",
-    "-*/.*",
-]
