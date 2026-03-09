@@ -4,7 +4,7 @@ well so this here is a tiny engine for kinetic visual novels. the focus is in ea
 
 inspired by freya campbell's [videotome](https://communistsister.itch.io/videotome), written in love2d by [solflo](https://solflo.neocities.org/).
 
-it's currently on v1.1 and rather janky. it was written in under 48 hours by someone who's never touched lua before. it'll be eternally kinda janky obvi but i might tweak things here and there as i use the thing and need features for myself (i already added sprite movement which i don't even really use [^1] and i'd love pixel-perfect scaling... and i am not using a library for that.). but _minification is the point_ and i've already scope crept with sprite positioning so don't hold your breath.
+it's currently on v1.2 and rather janky. it was originally written in under 48 hours by someone who's never touched lua before. it'll be eternally kinda janky obvi but i might tweak things here and there as i use the thing and need features for myself (i already added sprite movement which i don't even really use [^1] and i'd love pixel-perfect scaling... and i am not using a library for that.). but _minification is the point_ and i've already scope crept with sprite positioning so don't hold your breath.
 
 [^1]: see that's the problem with adding features: they start asking for other features. this or multiple sprite slots wouldn't have crossed my mind if i'd stuck with a single image slot, for the background!
 
@@ -35,6 +35,7 @@ uh you're on your own there but [makelove](https://github.com/pfirsich/makelove)
 
 - ```enter```, ```down arrow```, ```left click``` and ```scroll down``` advance text
 - ```up arrow``` and ```scroll up``` display previous text. this won't affect images or audio
+- ```a``` toggles auto. you can't control the speed
 - ```f``` toggles fullscreen
 - ```m``` toggles mute
 - ```esc``` closes the game

@@ -1,7 +1,7 @@
 ------------------------------------------------------
 ------------------------------------------------------
 --- LOVE LETTER ENGINE -------------------------------
-------------------- v. 1.1 ---------------------------
+------------------- v. 1.2 ---------------------------
 ------------------------------------------------------
 
 -- well so this here is a tiny engine for kinetic visual novels.
@@ -68,11 +68,14 @@ function reset() --- puts the game into a freshly opened state
     currentMus = nil
     currentSfx = nil
 
+
     --- dealing with the script ---
 
     script = {} --- preparing the script table
     currentLine = 1 --- lua is a freak one-indexed language
     maxLines = 0
+    auto = false
+    timer = 0
     
     for line in love.filesystem.lines("script.txt") do
         table.insert(script, line) --- this puts the script into the table, line by line
@@ -260,6 +263,15 @@ function returnScript()
     --- and store the "present" line to know when to change color back to normal
 end
 
+function autoScript(dt)
+    timer = timer + dt
+    if timer >= autoSpeed then
+        advanceScript()
+        timer = 0
+    end
+end
+
+
 --------------------------
 --- CONTROLS -------------
 --------------------------
@@ -272,6 +284,10 @@ function love.update(dt)
 
     moveSprite()
 
+    if auto == true then
+        autoScript(dt)
+    end
+
     function love.keypressed( key )
         if key == "return" or key == "down" then
             advanceScript()
@@ -279,6 +295,10 @@ function love.update(dt)
 
         if key == "up" then
             returnScript()
+        end
+
+        if key == "a" then
+            auto = not auto
         end
 
         if key == "f" then
@@ -301,6 +321,13 @@ function love.update(dt)
             end
 
             if gamestate == "game" then
+                    if currentMus ~= nil and currentMus:isPlaying() then
+                        love.audio.stop(currentMus)
+                    end
+                    
+                    if currentSfx ~= nil and currentSfx:isPlaying() then
+                        love.audio.stop(currentSfx)
+                    end
                 gamestate = "menu"
                 reset()
             end

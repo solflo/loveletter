@@ -7,6 +7,7 @@ function love.conf(t)
 	menuText = [[
 [enter] / [down] / [left-click] advance
 [up] / [scrollwheel up] return
+[a] auto
 [esc] exit
 [f] fullscreen
 [m] mute ]]
@@ -35,6 +36,8 @@ function love.conf(t)
     font = "pc-9800.ttf" --- set to nil (no quotes) if you don't include a font file
 	fontSize = 16
 	divider = " | " --- the style of divider between nametag and text
+	
+	autoSpeed = 6 --- time to auto skip text, in seconds
 	    
     -- nametagColor = {0.84, 0.63, 0.78}
     --- you probably _can_ set a different color per character but that sounds annoyingggg
