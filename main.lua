@@ -1,7 +1,7 @@
 ------------------------------------------------------
 ------------------------------------------------------
 --- LOVE LETTER ENGINE -------------------------------
-------------------- v. 1.2 ---------------------------
+------------------- v. 1.2.1 -------------------------
 ------------------------------------------------------
 
 -- well so this here is a tiny engine for kinetic visual novels.
@@ -74,7 +74,9 @@ function reset() --- puts the game into a freshly opened state
     script = {} --- preparing the script table
     currentLine = 1 --- lua is a freak one-indexed language
     maxLines = 0
+
     auto = false
+    autoSpeed = defaultSpeed
     timer = 0
     
     for line in love.filesystem.lines("script.txt") do
@@ -265,7 +267,9 @@ end
 
 function autoScript(dt)
     timer = timer + dt
-    if timer >= autoSpeed then
+    print(autoSpeed * (string.len(script[currentLine]) / 100))
+    print(string.len(script[currentLine]))
+    if timer >= autoSpeed * (string.len(script[currentLine]) / 100) and timer >= 2 then
         advanceScript()
         timer = 0
     end
@@ -294,11 +298,24 @@ function love.update(dt)
         end
 
         if key == "up" then
+            if auto == true then auto = false end
             returnScript()
         end
 
         if key == "a" then
             auto = not auto
+        end
+
+        if key == "1" then
+            autoSpeed = slowSpeed
+        end
+
+        if key == "2" then
+            autoSpeed = defaultSpeed
+        end
+        
+        if key == "3" then
+            autoSpeed = fastSpeed
         end
 
         if key == "f" then

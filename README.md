@@ -35,7 +35,7 @@ uh you're on your own there but [makelove](https://github.com/pfirsich/makelove)
 
 - ```enter```, ```down arrow```, ```left click``` and ```scroll down``` advance text
 - ```up arrow``` and ```scroll up``` display previous text. this won't affect images or audio
-- ```a``` toggles auto. you can't control the speed
+- ```a``` toggles auto. ```1 / 2 / 3``` control speed (slow, default, fast)
 - ```f``` toggles fullscreen
 - ```m``` toggles mute
 - ```esc``` closes the game

@@ -8,6 +8,7 @@ function love.conf(t)
 [enter] / [down] / [left-click] advance
 [up] / [scrollwheel up] return
 [a] auto
+[1 / 2 / 3] auto speed
 [esc] exit
 [f] fullscreen
 [m] mute ]]
@@ -37,7 +38,9 @@ function love.conf(t)
 	fontSize = 16
 	divider = " | " --- the style of divider between nametag and text
 	
-	autoSpeed = 6 --- time to auto skip text, in seconds
+	defaultSpeed = 7 --- time to auto skip text. the speed adjusts based on line length, so this is seconds per 100 characters
+	slowSpeed = 9 --- idem, but for the slow setting
+	fastSpeed = 5 --- ibidem, for the fast setting
 	    
     -- nametagColor = {0.84, 0.63, 0.78}
     --- you probably _can_ set a different color per character but that sounds annoyingggg
