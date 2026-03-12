@@ -26,6 +26,7 @@ oh and you'd better install [löve](https://www.love2d.org/) for testing, duh. i
 - ```!MUS name``` plays looping audio. can be stopped with ```!MUS stop```
 - ```!SFX name``` plays audio once and can't be stopped
 - ```!name``` prefixes the line with a nametag
+- ```!--``` comments out the line
 
 ### building
 

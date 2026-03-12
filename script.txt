@@ -1,3 +1,5 @@
+!-- this is a comment
+!-- if it shows i'll cry
 No live organism can continue for long to exist sanely under conditions of absolute reality;
 !BG background
 !MUS placeholder

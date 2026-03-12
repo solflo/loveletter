@@ -1,7 +1,7 @@
 ------------------------------------------------------
 ------------------------------------------------------
 --- LOVE LETTER ENGINE -------------------------------
-------------------- v. 1.2.1 -------------------------
+------------------- v. 1.2.2 -------------------------
 ------------------------------------------------------
 
 -- well so this here is a tiny engine for kinetic visual novels.
@@ -93,6 +93,15 @@ end
 function parseTags() --- checks current line for syntax
 
     if script[currentLine] ~= nil then
+
+        tag = string.match(script[currentLine], "!%-%-")
+
+        if tag == "!--" then
+            print(tag)
+            table.remove(script, currentLine) --- removes line (comment)
+            parseTags()
+        end
+
 
         tag = string.match(script[currentLine], "!%w+")
         --- matches bang 1+ alphanumeric char ("!example")
