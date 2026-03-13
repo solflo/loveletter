@@ -97,7 +97,6 @@ function parseTags() --- checks current line for syntax
         tag = string.match(script[currentLine], "!%-%-")
 
         if tag == "!--" then
-            print(tag)
             table.remove(script, currentLine) --- removes line (comment)
             parseTags()
         end
@@ -276,8 +275,6 @@ end
 
 function autoScript(dt)
     timer = timer + dt
-    print(autoSpeed * (string.len(script[currentLine]) / 100))
-    print(string.len(script[currentLine]))
     if timer >= autoSpeed * (string.len(script[currentLine]) / 100) and timer >= 2 then
         advanceScript()
         timer = 0
