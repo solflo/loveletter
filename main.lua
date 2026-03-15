@@ -1,7 +1,7 @@
 ------------------------------------------------------
 ------------------------------------------------------
 --- LOVE LETTER ENGINE -------------------------------
-------------------- v. 1.2.2 -------------------------
+------------------- v. 1.2.3 -------------------------
 ------------------------------------------------------
 
 -- well so this here is a tiny engine for kinetic visual novels.
@@ -18,7 +18,6 @@ function love.load()
     else
         love.graphics.setNewFont(font, fontSize)
     end
-    --- font path and size go in conf.lua
 
     --- dealing with images ---
 
@@ -82,7 +81,6 @@ function reset() --- puts the game into a freshly opened state
     for line in love.filesystem.lines("script.txt") do
         table.insert(script, line) --- this puts the script into the table, line by line
         maxLines = maxLines + 1 --- counting lines so we know when to end
-        --- !EOF could work too if you wanted to have notes within the script without deleting them, but whatever
     end
 
     parseTags()
@@ -212,8 +210,6 @@ function parseTags() --- checks current line for syntax
     end
 end
 
-
-
 function moveSprite()
     --- this function is horrendous and i'm sorry
     --- this thing gave me much more trouble than i anticipated
@@ -281,6 +277,15 @@ function autoScript(dt)
     end
 end
 
+function shutup() --- stops all audio
+    if currentMus ~= nil and currentMus:isPlaying() then
+        love.audio.stop(currentMus)
+    end
+    
+    if currentSfx ~= nil and currentSfx:isPlaying() then
+        love.audio.stop(currentSfx)
+    end
+end
 
 --------------------------
 --- CONTROLS -------------
@@ -289,6 +294,11 @@ end
 function love.update(dt)
     if script[currentLine] == nil and gamestate == "game" then
         gamestate = "end"
+        return
+    end
+
+    if gamestate == "end" then
+        shutup()
         return
     end
 
@@ -344,13 +354,7 @@ function love.update(dt)
             end
 
             if gamestate == "game" then
-                    if currentMus ~= nil and currentMus:isPlaying() then
-                        love.audio.stop(currentMus)
-                    end
-                    
-                    if currentSfx ~= nil and currentSfx:isPlaying() then
-                        love.audio.stop(currentSfx)
-                    end
+                shutup()
                 gamestate = "menu"
                 reset()
             end
