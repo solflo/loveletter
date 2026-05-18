@@ -48,6 +48,9 @@ function love.conf(t)
 
 	--- VISUALS --------------
 
+	bgColor = {0,0,0,1} --- rgba, with values between 0-1. defaults to black
+	textColor = {1,1,1,1} --- idem. defaults to white
+
 	imgSize = {512, 300} --- w, h
 	textWidth = imgSize[1] --- textbox width == image width
 

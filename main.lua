@@ -11,6 +11,9 @@
 
 function love.load()
 
+    love.graphics.setBackgroundColor(bgColor)
+    love.graphics.setColor(textColor)
+
     gamestate = "menu"
 
     if font == nil then
