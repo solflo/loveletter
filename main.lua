@@ -1,7 +1,7 @@
 ------------------------------------------------------
 ------------------------------------------------------
 --- LOVE LETTER ENGINE -------------------------------
-------------------- v. 1.2.3 -------------------------
+------------------- v. 1.2.5 -------------------------
 ------------------------------------------------------
 
 -- well so this here is a tiny engine for kinetic visual novels.
@@ -10,9 +10,6 @@
 
 
 function love.load()
-
-    love.graphics.setBackgroundColor(bgColor)
-    love.graphics.setColor(textColor)
 
     gamestate = "menu"
 
@@ -389,6 +386,9 @@ end
 
 function love.draw()
 
+    love.graphics.setBackgroundColor(bgColor)
+    love.graphics.setColor(textColor)
+
     if gamestate == "menu" then
         
         love.graphics.printf(title, textCoords[1], 50, textWidth, "left")
@@ -404,11 +404,15 @@ function love.draw()
 
 
     if currentImg ~= nil then
+        love.graphics.setColor(1,1,1,1)
         love.graphics.draw(currentImg, imgX, imgY)
+        love.graphics.setColor(textColor)
     end
 
     if currentSprite ~= nil then
+        love.graphics.setColor(1,1,1,1)
         love.graphics.draw(currentSprite, sprX, sprY)
+        love.graphics.setColor(textColor)
     end
 
     -- if hasNametag == true then
@@ -421,4 +425,5 @@ function love.draw()
     -- end
 
     love.graphics.printf(script[currentLine], textCoords[1], textCoords[2], textWidth) --- string, x, y, width
+    love.graphics.setColor(1,1,1,1)
 end
