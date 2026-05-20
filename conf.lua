@@ -41,15 +41,14 @@ function love.conf(t)
 	defaultSpeed = 7 --- time to auto skip text. the speed adjusts based on line length, so this is seconds per 100 characters
 	slowSpeed = 9 --- idem, but for the slow setting
 	fastSpeed = 5 --- ibidem, for the fast setting
-	    
-    -- nametagColor = {0.84, 0.63, 0.78}
-    --- you probably _can_ set a different color per character but that sounds annoyingggg
-	--- i just gave up on this function
 
 	--- VISUALS --------------
 
-	bgColor = {0,0,0,1} --- rgba, with values between 0-1. defaults to black
-	textColor = {1,1,1,1} --- idem. defaults to white
+	bgColor = {0, 0, 0, 1} --- rgba, with values between 0-1. defaults to black
+	narrationColor = {1, 1, 1, 1} --- idem. defaults to white. text without dialogue tags
+	dialogueColor = {0.6, 0.67, 0.72, 1} --- ibidem. defaults to light blue. an accent color for dialogue lines. they're all the same unless you mess with the engine
+	fadedColor = {1, 1, 1, 0.7} --- ibidem. defaults to gray. previously seen text, when viewing history
+
 
 	imgSize = {512, 300} --- w, h
 	textWidth = imgSize[1] --- textbox width == image width

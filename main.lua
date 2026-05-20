@@ -72,6 +72,7 @@ function reset() --- puts the game into a freshly opened state
 
     script = {} --- preparing the script table
     currentLine = 1 --- lua is a freak one-indexed language
+    mostRecentLine = nil --- resets the last seen line
     maxLines = 0
 
     auto = false
@@ -204,8 +205,12 @@ function parseTags() --- checks current line for syntax
 
         if chars[tag] ~= nil then --- parse nametag
                 --- this checks if tag exists in the chars table. lua uses ~= instead of !=
-            -- hasNametag = true --- killed this thought
             script[currentLine] = string.gsub(script[currentLine], tag, chars[tag] .. divider) --- source string, pattern to match, replacement
+            textColor = dialogueColor
+        elseif mostRecentLine ~= nil and currentLine < mostRecentLine then
+            textColor = fadedColor
+        else
+            textColor = narrationColor
         end
     end
 end
@@ -262,11 +267,15 @@ end
 
 function returnScript()
     if currentLine > 1 and gamestate == "game" then
+        if (mostRecentLine == nil) or (mostRecentLine ~= nil and currentLine > mostRecentLine) then
+            mostRecentLine = currentLine
+            --- this stores how far along the script the user has been
+        end
+        textColor = fadedColor
+        --- because of how the parseTags() func works now, text will go back to normal colors when advancing again. yay!
         currentLine = currentLine - 1
     end
     --- aww yeahh rudimentary history babey
-    --- possibility: set a different / fainter color for seen text
-    --- and store the "present" line to know when to change color back to normal
 end
 
 function autoScript(dt)
@@ -359,6 +368,13 @@ function love.update(dt)
                 reset()
             end
         end
+
+        if key == "f8" then
+            -- this is delegated to f8 bc it's more for dev purposes.
+            -- don't wanna clutter anyone's filesystem since setting up a custom save directory is a hassle i don't wanna go through
+            print(love.filesystem.getSaveDirectory())
+            love.graphics.captureScreenshot(os.time() .. ".png")
+        end
     end
 
     function love.mousereleased(x, y, button)
@@ -390,14 +406,14 @@ function love.draw()
     love.graphics.setColor(textColor)
 
     if gamestate == "menu" then
-        
+        textColor = narrationColor
         love.graphics.printf(title, textCoords[1], 50, textWidth, "left")
         love.graphics.printf(menuText, textCoords[1], 180, textWidth, "left")
-
         return
     end
 
     if gamestate == "end" then
+        textColor = narrationColor
         love.graphics.printf(endText, textCoords[1], 80, textWidth, "center")
         return
     end
@@ -414,15 +430,6 @@ function love.draw()
         love.graphics.draw(currentSprite, sprX, sprY)
         love.graphics.setColor(textColor)
     end
-
-    -- if hasNametag == true then
-    --     love.graphics.setColor(nametagColor)
-    --     love.graphics.printf(script[currentLine], textCoords[1], textCoords[2], textWidth)
-    --     love.graphics.setColor(1,1,1)
-    -- else
-    --     love.graphics.setColor(1,1,1)
-    --     love.graphics.printf(script[currentLine], textCoords[1], textCoords[2], textWidth) --- string, x, y, width
-    -- end
 
     love.graphics.printf(script[currentLine], textCoords[1], textCoords[2], textWidth) --- string, x, y, width
     love.graphics.setColor(1,1,1,1)
