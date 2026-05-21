@@ -98,6 +98,7 @@ function parseTags() --- checks current line for syntax
         if tag == "!--" then
             table.remove(script, currentLine) --- removes line (comment)
             parseTags()
+            return
         end
 
 

@@ -42,3 +42,22 @@ uh you're on your own there but [makelove](https://github.com/pfirsich/makelove)
 - ```esc``` closes the game
 
 you can also take a screenshot with ```f8```. this is mostly as a dev aid. löve is gonna save this to some fuckass location, so the command also prints the path to the console. on linux that's ```~/.local/share/love/PROJECTNAME```.
+
+## known errors
+
+ok so troubleshooting a love letter game is mostly just rereading the script to make sure you haven't fucked up. here are some specific fuck ups i've made:
+
+### "attempted to index global 'currentSfx' (a nil value)"
+
+doesn't have to be an sfx. caused by calling an asset that doesn't exist / isn't declared. double check ```script.txt``` and ```conf.lua``` for typos.
+
+this could be handled by the engine checking whether ```currentSfx == nil``` and gracefully carrying on, but the obvious error is more functional since it forces you to handle your mistake. this could in turn be handled by having a toggleable debug mode, and now you see the scope-creeping mindset in action. so just reread the script.
+
+### previous errors
+
+keeping these for reference but these shouldn't happen anymore (as of v1.2.5).
+
+- __"bad agument #1 to 'match' (string expected, got nil)"__: caused by the final line of the script being a comment.
+- __random dialogue not being colored__: caused by having a comment directly before the line.
+
+comment-related errors were caused by a missing ```return``` in that syntax check, so the function kept going instead of restarting.

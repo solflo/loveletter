@@ -36,7 +36,7 @@ function love.conf(t)
 
     font = "pc-9800.ttf" --- set to nil (no quotes) if you don't include a font file
 	fontSize = 16
-	divider = " | " --- the style of divider between nametag and text
+	divider = " | " --- the style of divider between nametag and text. TIP: using \n will create a new line. so divider = " | \n" can be used to put the nametag above the line
 	
 	defaultSpeed = 7 --- time to auto skip text. the speed adjusts based on line length, so this is seconds per 100 characters
 	slowSpeed = 9 --- idem, but for the slow setting
