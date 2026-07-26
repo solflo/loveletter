@@ -17,6 +17,8 @@ it's currently on v1.2.x and rather janky. it was originally written in under 48
 
 oh and you'd better install [löve](https://www.love2d.org/) for testing, duh. i use it by opening the terminal in the directory and running ```love .```.
 
+i've also made a [syntax highlighter](https://github.com/solflo/loveletter-highlighter) for vscodium / vscode, if you wanna!
+
 ### syntax
 
 - all commands are preceded by ```!```, one command per line
