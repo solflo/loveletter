@@ -1,13 +1,12 @@
 ------------------------------------------------------
 ------------------------------------------------------
 --- LOVE LETTER ENGINE -------------------------------
-------------------- v. 1.2.5 -------------------------
+------------------- v. 1.2.6 -------------------------
 ------------------------------------------------------
 
 -- well so this here is a tiny engine for kinetic visual novels.
 -- inspired by freya campbell's videotome (https://communistsister.itch.io/videotome),
 -- written in love2d by solflo (https://solflo.neocities.org/)
-
 
 function love.load()
 
@@ -206,7 +205,7 @@ function parseTags() --- checks current line for syntax
 
         if chars[tag] ~= nil then --- parse nametag
                 --- this checks if tag exists in the chars table. lua uses ~= instead of !=
-            script[currentLine] = string.gsub(script[currentLine], tag, chars[tag] .. divider) --- source string, pattern to match, replacement
+            script[currentLine] = string.gsub(script[currentLine], tag .. " ", chars[tag] .. divider) --- source string, pattern to match, replacement
             textColor = dialogueColor
         elseif mostRecentLine ~= nil and currentLine < mostRecentLine then
             textColor = fadedColor
