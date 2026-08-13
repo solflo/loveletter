@@ -10,25 +10,26 @@ it's currently on v1.2.x and rather janky. it was originally written in under 48
 
 ## using
 
-- script goes in ```script.txt```
+- script goes in `script.txt`
 - images and audio go in their respective folders (or not, this isn't automated. organize as you will)
-- configuration is in ```conf.lua```
-- engine is ```main.lua```. any fancier changes go there
+- configuration is in `conf.lua`
+- engine is `main.lua`. any fancier changes go there
+- `wordcounter.lua` is a helper tool, not really part of the engine. it gives a reasonably accurate word count of the script with syntax stripped. it's not part of the engine and needs lua, run with `lua wordcounter.lua`
 
-oh and you'd better install [löve](https://www.love2d.org/) for testing, duh. i use it by opening the terminal in the directory and running ```love .```.
+oh and you'd better install [löve](https://www.love2d.org/) for testing, duh. i use it by opening the terminal in the directory and running `love .`.
 
 i've also made a [syntax highlighter](https://github.com/solflo/loveletter-highlighter) for vscodium / vscode, if you wanna!
 
 ### syntax
 
-- all commands are preceded by ```!```, one command per line
-- ```!BG name``` displays an image at a fixed position. can be hidden with ```!BG hide```
-- ```!SPR name``` (sprite) goes on top. can be positioned with ```!SPR name x100 y100``` (either coordinate can be ommited). can be hidden with ```!SPR hide```
-- if changing positions of a sprite already on screen, it'll linearly move between positions by default. this is a little janky. going ```!SPR hide``` before the new ```!SPR name``` will change positions instantly. i have not tested this extensively 
-- ```!MUS name``` plays looping audio. can be stopped with ```!MUS stop```
-- ```!SFX name``` plays audio once and can't be stopped
-- ```!name``` prefixes the line with a nametag, and changes its color
-- ```!--``` comments out the line
+- all commands are preceded by `!`, one command per line
+- `!BG name` displays an image at a fixed position. can be hidden with `!BG hide`
+- `!SPR name` (sprite) goes on top. can be positioned with `!SPR name x100 y100` (either coordinate can be ommited). can be hidden with `!SPR hide`
+- if changing positions of a sprite already on screen, it'll linearly move between positions by default. this is a little janky. going `!SPR hide` before the new `!SPR name` will change positions instantly. i have not tested this extensively 
+- `!MUS name` plays looping audio. can be stopped with `!MUS stop`
+- `!SFX name` plays audio once and can't be stopped
+- `!name` prefixes the line with a nametag, and changes its color
+- `!--` comments out the line
 
 ### building
 
@@ -36,14 +37,14 @@ uh you're on your own there but [makelove](https://github.com/pfirsich/makelove)
 
 ## playing
 
-- ```enter```, ```down arrow```, ```left click``` and ```scroll down``` advance text
-- ```up arrow``` and ```scroll up``` display previous text. this won't affect images or audio
-- ```a``` toggles auto. ```1 / 2 / 3``` control speed (slow, default, fast)
-- ```f``` toggles fullscreen
-- ```m``` toggles mute
-- ```esc``` closes the game
+- `enter`, `down arrow`, `left click` and `scroll down` advance text
+- `up arrow` and `scroll up` display previous text. this won't affect images or audio
+- `a` toggles auto. `1 / 2 / 3` control speed (slow, default, fast)
+- `f` toggles fullscreen
+- `m` toggles mute
+- `esc` closes the game
 
-you can also take a screenshot with ```f8```. this is mostly as a dev aid. löve is gonna save this to some fuckass location, so the command also prints the path to the console. on linux that's ```~/.local/share/love/PROJECTNAME```.
+you can also take a screenshot with `f8`. this is mostly as a dev aid. löve is gonna save this to some fuckass location, so the command also prints the path to the console. on linux that's `~/.local/share/love/PROJECTNAME`.
 
 ## known errors
 
@@ -51,9 +52,9 @@ ok so troubleshooting a love letter game is mostly just rereading the script to 
 
 ### "attempted to index global 'currentSfx' (a nil value)"
 
-doesn't have to be an sfx. caused by calling an asset that doesn't exist / isn't declared. double check ```script.txt``` and ```conf.lua``` for typos.
+doesn't have to be an sfx. caused by calling an asset that doesn't exist / isn't declared. double check `script.txt` and `conf.lua` for typos.
 
-this could be handled by the engine checking whether ```currentSfx == nil``` and gracefully carrying on, but the obvious error is more functional since it forces you to handle your mistake. this could in turn be handled by having a toggleable debug mode, and now you see the scope-creeping mindset in action. so just reread the script.
+this could be handled by the engine checking whether `currentSfx == nil` and gracefully carrying on, but the obvious error is more functional since it forces you to handle your mistake. this could in turn be handled by having a toggleable debug mode, and now you see the scope-creeping mindset in action. so just reread the script.
 
 ### previous errors
 
@@ -62,4 +63,4 @@ keeping these for reference but these shouldn't happen anymore (as of v1.2.5).
 - __"bad agument #1 to 'match' (string expected, got nil)"__: caused by the final line of the script being a comment.
 - __random dialogue not being colored__: caused by having a comment directly before the line.
 
-comment-related errors were caused by a missing ```return``` in that syntax check, so the function kept going instead of restarting.
+comment-related errors were caused by a missing `return` in that syntax check, so the function kept going instead of restarting.
