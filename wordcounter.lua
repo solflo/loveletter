@@ -1,6 +1,5 @@
 #!/usr/bin/env lua
 
-script = {}
 syntaxTags = {"!MUS", "!SFX", "!BG", "!SPR"}
 wc = 0 --- word count
 lc = 0 --- line count
