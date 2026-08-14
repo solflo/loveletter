@@ -20,10 +20,12 @@ for line in io.lines("script.txt") do
 
         tag = string.match(line, "^!%w+") --- now we check for syntax
 
+        isSyntax = false
         syntaxCheck()
 
         if isSyntax ~= true then --- if not syntax
             lc = lc + 1 --- count the line
+            print(line)
 
             if tag ~= nil then --- if there is a tag (it must be a character tag)
                 wc = wc - 1 --- a little brute forced lol
