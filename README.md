@@ -58,7 +58,13 @@ this could be handled by the engine checking whether `currentSfx == nil` and gra
 
 ### previous errors
 
-keeping these for reference but these shouldn't happen anymore (as of v1.2.5).
+keeping these for reference but these shouldn't happen anymore.
+
+#### as of v1.2.7
+
+- __crash at game end on auto__: i'm not too sure why this was happening tbh, the logic seemed sound. but it's been fixed with my one hammer (`if ~= nil`)
+
+#### as of v1.2.5
 
 - __"bad agument #1 to 'match' (string expected, got nil)"__: caused by the final line of the script being a comment.
 - __random dialogue not being colored__: caused by having a comment directly before the line.
