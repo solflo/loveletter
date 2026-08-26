@@ -12,7 +12,7 @@ silence lay steadily against the wood and stone of Hill House, and whatever walk
 ...
 !SPR sprite
 !SOL hi welcome to my silly little engine
-!SOL that's not me btw, that's little angel and it can't speak
+!SOL that's not me btw, that's sacrificial lamb and it can't speak
 !SPR sprite x120 y126
 !SOL i needed something to test with though.
 !SFX thud
