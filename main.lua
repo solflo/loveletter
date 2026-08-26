@@ -279,6 +279,11 @@ function returnScript()
 end
 
 function autoScript(dt)
+    if gamestate == "menu" then
+        advanceScript()
+        return
+    end
+    
     timer = timer + dt
     if timer >= autoSpeed * (string.len(script[currentLine]) / 100) and timer >= 2 then
         advanceScript()
