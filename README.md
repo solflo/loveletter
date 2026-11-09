@@ -1,3 +1,5 @@
+**i've migrated this repo (and all other ll stuff) to [codeberg](https://codeberg.org/solflo/loveletter)!!**
+
 # love letter engine
 
 well so this here is a tiny engine for kinetic visual novels. the focus is in easy and fast writing without the temptation to scope creep and complicate things with features, as well as keeping file sizes small and cute. the demo game appimage, for example, is just under 5mb, and i'm pretty sure most of that is the bundled font.
@@ -18,7 +20,7 @@ it's currently on v1.2.x and rather janky. it was originally written in under 48
 
 oh and you'd better install [löve](https://www.love2d.org/) for testing, duh. i use it by opening the terminal in the directory and running `love .`.
 
-i've also made a [syntax highlighter](https://github.com/solflo/loveletter-highlighter) for vscodium / vscode, if you wanna! and there's a [cookbook](https://github.com/solflo/loveletter/wiki) with hacks and tips.
+i've also made a [syntax highlighter](https://codeberg.org/solflo/loveletter-highlighter) for vscodium / vscode, if you wanna! and there's a [cookbook](https://codeberg.org/solflo/loveletter/wiki) with hacks and tips.
 
 ### syntax
 
@@ -33,7 +35,9 @@ i've also made a [syntax highlighter](https://github.com/solflo/loveletter-highl
 
 ### building
 
-uh you're on your own there but [makelove](https://github.com/pfirsich/makelove) is very straightforward, at least on linux (and probably wsl too). love.js is hiiiideous out of the box but you can't win them all. i'm not making a template, but it's pretty easy to adjust things so it looks decent as an itch embed.
+uh you're on your own there but [makelove](https://github.com/pfirsich/makelove) is very straightforward, at least on linux (and probably wsl too). love.js is hiiiideous out of the box but you can't win them all. i'm not making a template, but it's pretty easy to [adjust things](https://codeberg.org/solflo/loveletter/wiki/%5Bdistribution%5D-making-lovejs-look-better) so it looks decent as an itch embed.
+
+alternatively, you can use [love note](https://codeberg.org/solflo/lovenote/) for web builds ([guide on wiki](https://codeberg.org/solflo/loveletter/wiki/%5Bdistribution%5D-exporting-for-web-without-lovejs)).
 
 ## playing
 
